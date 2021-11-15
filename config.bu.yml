@@ -1,0 +1,25 @@
+variant: fcos
+version: "1.4.0"
+passwd:
+  users:
+    - name: ${ADMIN_USERNAME}
+      groups:
+        - wheel
+        - sudo
+      ssh_authorized_keys:
+        - ${ADMIN_PUBKEY}
+storage:
+  files:
+    - path: /etc/hostname
+      contents:
+        inline: home-server
+    - path: /etc/systemd/resolved.conf.d/mdns.conf
+      contents:
+        inline: |
+          [Resolve]
+          MulticastDNS=yes
+    - path: /etc/NetworkManager/conf.d/mdns.conf
+      contents:
+        inline: |
+          [connection]
+          connection.mdns=2
